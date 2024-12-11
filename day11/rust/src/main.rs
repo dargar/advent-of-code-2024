@@ -40,17 +40,15 @@ fn answer_one(cache: &mut Cache, stone: u64, blinks: u64) -> u64 {
 
 fn change(stone: u64) -> Vec<u64> {
     if stone == 0 {
-        return vec![1];
-    }
-
-    let digits = digits(stone);
-    if digits.len() % 2 == 0 {
+        vec![1]
+    } else if (stone.ilog10() + 1) % 2 == 0 {
+        let digits = digits(stone);
         let lhs = &digits[0..digits.len() / 2];
         let rhs = &digits[digits.len() / 2..];
-        return vec![undigits(lhs), undigits(rhs)];
+        vec![undigits(lhs), undigits(rhs)]
+    } else {
+        vec![stone * 2024]
     }
-
-    vec![stone * 2024]
 }
 
 fn digits(mut n: u64) -> Vec<u8> {
