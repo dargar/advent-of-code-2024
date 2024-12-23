@@ -55,9 +55,12 @@ fn main() {
         .iter()
         .filter(|(computers, n)| computers.len() == **n)
         .max_by_key(|(_, n)| **n)
-        .map(|(computers, _)| computers)
+        .map(|(computers, _)| {
+            let names: Vec<&str> = computers.iter().cloned().collect();
+            names.join(",")
+        })
         .unwrap();
-    println!("Second answer: {second_answer:?}");
+    println!("Second answer: {second_answer}");
 }
 
 fn triples<T: Clone + Ord>(xs: &BTreeSet<T>) -> BTreeSet<BTreeSet<T>> {
